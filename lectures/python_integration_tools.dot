@@ -1,0 +1,28 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+islib [label=<Integrate an existing library?>, fillcolor="#e5813900"] ;
+islib -> otherlang [labeldistance=2.5, labelangle=45, headlabel="Yes"] ;
+otherlang -> swig [labeldistance=2.5, labelangle=45, headlabel="Yes"] ;
+otherlang [label=<Support other scripting<br/>languages than Python?>, fillcolor="#e5813900"] ;
+swig [label=<SWIG>, fillcolor="#e58139ff"] ;
+whichlang [label=<The library is written in:>, fillcolor="#e5813900"] ;
+otherlang -> whichlang [labeldistance=12.5, labelangle=-25, headlabel="No"] ;
+f2py [label=<f2py>, fillcolor="#f45342"] ;
+whichlang -> f2py [labeldistance=2.5, labelangle=45, headlabel="Fortran"] ;
+cython [label=<Cython<br/>ctypes<br/>instant>, fillcolor="#b9f442"] ;
+whichlang -> cython [labeldistance=2.0, labelangle=45, headlabel="C"] ;
+swig2 [label=<Cython<br/>PyCXX<br/>boost.python<br/>>, fillcolor="#e58139ff"] ;
+swig3 [label=<SWIG>, fillcolor="#e58139ff"] ;
+whichlang -> swig2 [labeldistance=3.5, labelangle=25, headlabel="C++"] ;
+whichlang -> swig3 [labeldistance=4.0, labelangle=-100, headlabel="C/C++ (large project)"] ;
+pyimpl [label=<Implement in Python.<br/>Is it fast enough?>, fillcolor="#e5813900"] ;
+islib -> pyimpl [labeldistance=2.5, labelangle=-45, headlabel="No"] ;
+numpyimpl [label=<Numpy with vectorization<br/>Cython<br/>PyPy<br/>Numba>, fillcolor="#4286f4"] ;
+pyimpl -> numpyimpl [labeldistance=2.5, labelangle=45, headlabel="No"] ;
+pysmile [label=<Use Python>, fillcolor="#39e581ff"] ;
+pyimpl -> pysmile [labeldistance=2.5, labelangle=-45, headlabel="Yes"] ;
+cimpl [label=<Still too slow?<br/>Reimplement in C/C++/Fortran>, fillcolor="#e5813900"] ;
+numpyimpl -> cimpl [labeldistance=2.5, labelangle=-45] ;
+cimpl -> whichlang [labeldistance=2.5, labelangle=45] ;
+}
