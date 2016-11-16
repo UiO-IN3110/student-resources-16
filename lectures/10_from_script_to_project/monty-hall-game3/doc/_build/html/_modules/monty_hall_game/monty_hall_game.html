@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>monty_hall_game.monty_hall_game &#8212; Monty Hall Game 0.0.1 documentation</title>
+
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Monty Hall Game 0.0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+
+  <h1>Source code for monty_hall_game.monty_hall_game</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<div class="viewcode-block" id="MontyHallGame"><a class="viewcode-back" href="../../monty_hall_game.html#monty_hall_game.monty_hall_game.MontyHallGame">[docs]</a><span class="k">class</span> <span class="nc">MontyHallGame</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Instantiates a new Monty Hall Game object.</span>
+
+<span class="sd">    Example usage:</span>
+
+<span class="sd">    ```</span>
+<span class="sd">    game = MontyHallGame()</span>
+
+<span class="sd">    game.select_door(1)</span>
+<span class="sd">    game.let_host_open_door()</span>
+
+<span class="sd">    to_open = random.choice(game.available_doors())</span>
+<span class="sd">    game.select_door(to_open)</span>
+
+<span class="sd">    won = game.open_door()</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+             <span class="s2">&quot;changed&quot;</span><span class="p">:</span>     <span class="p">{</span><span class="s2">&quot;won&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;lost&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+             <span class="s2">&quot;not_changed&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;won&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;lost&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+            <span class="p">}</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MontyHallGame.statistics"><a class="viewcode-back" href="../../monty_hall_game.html#monty_hall_game.monty_hall_game.MontyHallGame.statistics">[docs]</a>    <span class="k">def</span> <span class="nf">statistics</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot; Returns statistics about the winning chances of the &quot;change door&quot; </span>
+<span class="sd">        and &quot;do not change door&quot; strategies of all games played. &quot;&quot;&quot;</span>
+
+
+        <span class="c1"># Get statistics class variable</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">MontyHallGame</span><span class="o">.</span><span class="n">stats</span>
+
+        <span class="n">s1</span> <span class="o">=</span> <span class="s2">&quot;Changed and won: </span><span class="si">{}</span><span class="s2"> out of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;changed&quot;</span><span class="p">][</span><span class="s2">&quot;won&quot;</span><span class="p">],</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;changed&quot;</span><span class="p">][</span><span class="s2">&quot;won&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;changed&quot;</span><span class="p">][</span><span class="s2">&quot;lost&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+
+        <span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;Not changed and won: </span><span class="si">{}</span><span class="s2"> out of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;not_changed&quot;</span><span class="p">][</span><span class="s2">&quot;won&quot;</span><span class="p">],</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;not_changed&quot;</span><span class="p">][</span><span class="s2">&quot;won&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;not_changed&quot;</span><span class="p">][</span><span class="s2">&quot;lost&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__winning_door</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_door</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opened_door</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reselected_door</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="MontyHallGame.select_door"><a class="viewcode-back" href="../../monty_hall_game.html#monty_hall_game.monty_hall_game.MontyHallGame.select_door">[docs]</a>    <span class="k">def</span> <span class="nf">select_door</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">door</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Use this function to let the play select a door. This function</span>
+<span class="sd">        should be called twice: Once at the beginning of the game for the initial</span>
+<span class="sd">        door choice. And once after calling `MontyHallGame.let_host_open_door`.</span>
+<span class="sd">        </span>
+<span class="sd">        :ivar door: The door to be selected. Valid values: [1, 2, 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_door</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_door</span> <span class="o">=</span> <span class="n">door</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reselected_door</span> <span class="o">=</span> <span class="n">door</span></div>
+
+
+<div class="viewcode-block" id="MontyHallGame.available_doors"><a class="viewcode-back" href="../../monty_hall_game.html#monty_hall_game.monty_hall_game.MontyHallGame.available_doors">[docs]</a>    <span class="k">def</span> <span class="nf">available_doors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a list of doors that are still available for selection &quot;&quot;&quot;</span>
+
+
+        <span class="n">a</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opened_door</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MontyHallGame.let_host_open_door"><a class="viewcode-back" href="../../monty_hall_game.html#monty_hall_game.monty_hall_game.MontyHallGame.let_host_open_door">[docs]</a>    <span class="k">def</span> <span class="nf">let_host_open_door</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; When this function is called, the host will open a door that contains no price.</span>
+
+<span class="sd">        :returns: The newly opened door number as an int. &quot;&quot;&quot;</span>
+
+        <span class="n">opened</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="n">opened</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__winning_door</span><span class="p">)</span>
+        <span class="n">opened</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_door</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opened_door</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">opened</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">opened_door</span></div>
+
+
+<div class="viewcode-block" id="MontyHallGame.open_door"><a class="viewcode-back" href="../../monty_hall_game.html#monty_hall_game.monty_hall_game.MontyHallGame.open_door">[docs]</a>    <span class="k">def</span> <span class="nf">open_door</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Opens the door selected by the player </span>
+
+<span class="sd">        :returns: `True` if the player has won, `False` otherwise. &quot;&quot;&quot;</span>
+
+        <span class="n">changed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_door</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reselected_door</span>
+        <span class="n">game_won</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reselected_door</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__winning_door</span>
+
+        <span class="c1"># Update statistics</span>
+        <span class="k">if</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">game_won</span><span class="p">:</span>
+                <span class="n">MontyHallGame</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;changed&quot;</span><span class="p">][</span><span class="s2">&quot;won&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">MontyHallGame</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;changed&quot;</span><span class="p">][</span><span class="s2">&quot;lost&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">game_won</span><span class="p">:</span>
+                <span class="n">MontyHallGame</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;not_changed&quot;</span><span class="p">][</span><span class="s2">&quot;won&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">MontyHallGame</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;not_changed&quot;</span><span class="p">][</span><span class="s2">&quot;lost&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">game_won</span></div></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">game</span> <span class="o">=</span> <span class="n">MontyHallGame</span><span class="p">()</span>
+
+    <span class="n">game</span><span class="o">.</span><span class="n">select_door</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">game</span><span class="o">.</span><span class="n">let_host_open_door</span><span class="p">()</span>
+
+    <span class="n">to_open</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">game</span><span class="o">.</span><span class="n">available_doors</span><span class="p">())</span>
+    <span class="n">game</span><span class="o">.</span><span class="n">select_door</span><span class="p">(</span><span class="n">to_open</span><span class="p">)</span>
+
+    <span class="n">won</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">open_door</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">won</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You won&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You lost&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Simon Funke.
+
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+
+    </div>
+
+
+
+
+  </body>
+</html>

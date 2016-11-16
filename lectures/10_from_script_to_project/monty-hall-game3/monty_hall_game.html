@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module monty_hall_game</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>monty_hall_game</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/sf1409/Documents/inf3331/resources-16/lectures/10_from_script_to_project/monty-hall-game3/monty_hall_game/monty_hall_game.py">/home/sf1409/Documents/inf3331/resources-16/lectures/10_from_script_to_project/monty-hall-game3/monty_hall_game/monty_hall_game.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="uuid.html">uuid</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="monty_hall_game.html#MontyHallGame">MontyHallGame</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MontyHallGame">class <strong>MontyHallGame</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Instantiates&nbsp;a&nbsp;new&nbsp;Monty&nbsp;Hall&nbsp;Game&nbsp;<a href="builtins.html#object">object</a>.<br>
+&nbsp;<br>
+Example&nbsp;usage:<br>
+&nbsp;<br>
+```<br>
+game&nbsp;=&nbsp;<a href="#MontyHallGame">MontyHallGame</a>()<br>
+&nbsp;<br>
+game.<a href="#MontyHallGame-select_door">select_door</a>(1)<br>
+game.<a href="#MontyHallGame-let_host_open_door">let_host_open_door</a>()<br>
+&nbsp;<br>
+to_open&nbsp;=&nbsp;random.choice(game.<a href="#MontyHallGame-available_doors">available_doors</a>())<br>
+game.<a href="#MontyHallGame-select_door">select_door</a>(to_open)<br>
+&nbsp;<br>
+won&nbsp;=&nbsp;game.<a href="#MontyHallGame-open_door">open_door</a>()<br>
+```<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="MontyHallGame-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="MontyHallGame-available_doors"><strong>available_doors</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;list&nbsp;of&nbsp;doors&nbsp;that&nbsp;are&nbsp;still&nbsp;available&nbsp;for&nbsp;selection</tt></dd></dl>
+
+<dl><dt><a name="MontyHallGame-let_host_open_door"><strong>let_host_open_door</strong></a>(self)</dt><dd><tt>When&nbsp;this&nbsp;function&nbsp;is&nbsp;called,&nbsp;the&nbsp;host&nbsp;will&nbsp;open&nbsp;a&nbsp;door&nbsp;that&nbsp;contains&nbsp;no&nbsp;price.<br>
+&nbsp;<br>
+:returns:&nbsp;The&nbsp;newly&nbsp;opened&nbsp;door&nbsp;number&nbsp;as&nbsp;an&nbsp;int.</tt></dd></dl>
+
+<dl><dt><a name="MontyHallGame-open_door"><strong>open_door</strong></a>(self)</dt><dd><tt>Opens&nbsp;the&nbsp;door&nbsp;selected&nbsp;by&nbsp;the&nbsp;player&nbsp;<br>
+&nbsp;<br>
+:returns:&nbsp;`True`&nbsp;if&nbsp;the&nbsp;player&nbsp;has&nbsp;won,&nbsp;`False`&nbsp;otherwise.</tt></dd></dl>
+
+<dl><dt><a name="MontyHallGame-select_door"><strong>select_door</strong></a>(self, door)</dt><dd><tt>Use&nbsp;this&nbsp;function&nbsp;to&nbsp;let&nbsp;the&nbsp;play&nbsp;select&nbsp;a&nbsp;door.&nbsp;This&nbsp;function<br>
+should&nbsp;be&nbsp;called&nbsp;twice:&nbsp;Once&nbsp;at&nbsp;the&nbsp;beginning&nbsp;of&nbsp;the&nbsp;game&nbsp;for&nbsp;the&nbsp;initial<br>
+door&nbsp;choice.&nbsp;And&nbsp;once&nbsp;after&nbsp;calling&nbsp;:function:`<a href="#MontyHallGame">MontyHallGame</a>.let_host_open_door`.<br>
+&nbsp;<br>
+:ivar&nbsp;door:&nbsp;The&nbsp;door&nbsp;to&nbsp;be&nbsp;selected.&nbsp;Valid&nbsp;values:&nbsp;[1,&nbsp;2,&nbsp;3]</tt></dd></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="MontyHallGame-statistics"><strong>statistics</strong></a>()</dt><dd><tt>Returns&nbsp;statistics&nbsp;about&nbsp;the&nbsp;winning&nbsp;chances&nbsp;of&nbsp;the&nbsp;"change&nbsp;door"&nbsp;<br>
+and&nbsp;"do&nbsp;not&nbsp;change&nbsp;door"&nbsp;strategies&nbsp;of&nbsp;all&nbsp;games&nbsp;played.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>stats</strong> = {'changed': {'lost': 0, 'won': 0}, 'not_changed': {'lost': 0, 'won': 0}}</dl>
+
+</td></tr></table></td></tr></table>
+</body></html>
