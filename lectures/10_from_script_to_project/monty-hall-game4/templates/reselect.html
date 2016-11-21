@@ -1,0 +1,21 @@
+<!doctype html>
+<title>Change your mind?</title>
+
+<form action="/final?game_id={{ game_id }}" method="POST">
+    <h1>You have selected door {{ selected }}</h1>
+
+    <h2>I open door {{ opened }}.</h2>
+    <span>Guess what - nothing behind it!</span>
+
+    <h2>So... do you want to change your mind?</h2>
+	<br/>
+    {% for i in [1, 2, 3] %}
+        <input type="radio" name="door" value="{{ i }}"
+            {% if selected==i %} checked {% endif %}
+            {% if opened==i %} disabled {% endif %} >
+            Door {{ i }} {% if opened==i %} (opened) {% endif %}
+        </input>
+        <br/>
+    {% endfor %}
+    <input type="submit" value="Let's go">
+</form>
